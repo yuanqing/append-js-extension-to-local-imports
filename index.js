@@ -9,8 +9,15 @@ export async function appendJsExtensionToLocalImports (globPatterns) {
   }
 }
 
-const localImportRegex = /(import {?[^}'"]+}? from )(['"])(\.\.?\/[^'"]+)(\2\n)/g
+const localImportRegex = /(import {?[^'"}]+}? from )(['"])(\.\.?\/[^'"]+)(\2\n)/g
+const jsExtensionRegex = /\.js$/
 
 export function replace (string) {
-  return string.replace(localImportRegex, '$1$2$3.js$4')
+  return string.replace(localImportRegex, function (match, m1, m2, m3, m4) {
+    if (jsExtensionRegex.test(m3) === true) {
+      // already has the `.js` extension
+      return match
+    }
+    return `${m1}${m2}${m3}.js${m4}`
+  })
 }

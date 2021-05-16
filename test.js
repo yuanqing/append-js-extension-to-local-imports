@@ -95,6 +95,75 @@ test('local import - multiple lines', function (t) {
   )
 })
 
+test('local import - already has `.js` extension', function (t) {
+  t.deepEqual(
+    replace("import foo from './foo.js'\n"),
+    "import foo from './foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import foo from '../foo.js'\n"),
+    "import foo from '../foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import foo from '../../foo.js'\n"),
+    "import foo from '../../foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import { foo } from './foo.js'\n"),
+    "import { foo } from './foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import { foo } from '../foo.js'\n"),
+    "import { foo } from '../foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import { foo } from '../../foo.js'\n"),
+    "import { foo } from '../../foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import { foo, bar } from './foo.js'\n"),
+    "import { foo, bar } from './foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import { foo, bar } from '../foo.js'\n"),
+    "import { foo, bar } from '../foo.js'\n"
+  )
+  t.deepEqual(
+    replace("import { foo, bar } from '../../foo.js'\n"),
+    "import { foo, bar } from '../../foo.js'\n"
+  )
+  t.deepEqual(
+    replace(`import {
+  foo,
+  bar
+} from './foo.js'\n`),
+    `import {
+  foo,
+  bar
+} from './foo.js'\n`
+  )
+  t.deepEqual(
+    replace(`import {
+  foo,
+  bar
+} from '../foo.js'\n`),
+    `import {
+  foo,
+  bar
+} from '../foo.js'\n`
+  )
+  t.deepEqual(
+    replace(`import {
+  foo,
+  bar
+} from '../../foo.js'\n`),
+    `import {
+  foo,
+  bar
+} from '../../foo.js'\n`
+  )
+})
+
 test('local import - multiple matches', function (t) {
   t.deepEqual(
     replace(`import foo from 'foo'
